@@ -34,6 +34,16 @@ public class BallsManager : MonoBehaviour
         InitBall();
     }
 
+    private void Update()
+    {
+        if(!GameManager.Instance.IsGameStarted)
+        {
+            Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
+            Vector3 ballPosition = new Vector3(paddlePosition.x, paddlePosition.y + 0.27f, 0);
+            initialBall.transform.position = ballPosition;
+        }
+    }
+
     private void InitBall()
     {
         Vector3 paddlePosition = Paddle.Instance.gameObject.transform.position;
