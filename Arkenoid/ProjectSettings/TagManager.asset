@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - User1
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Paddle
     uniqueID: 2420049687
+    locked: 0
+  - name: Ball
+    uniqueID: 447060037
     locked: 0
   - name: Default
     uniqueID: 0
