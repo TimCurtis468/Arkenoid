@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
+    #region Singleton
+    private static Paddle _instance;
+    public static Paddle Instance => _instance;
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    #endregion
+
     private Camera mainCamera;
     private float paddleInitialY;
     private float defaultPaddleWidthInPixels = 200;
