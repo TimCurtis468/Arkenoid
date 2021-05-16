@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2d79d73d1936c4397b2ba32c9df34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoints: 1
+  HitPoints: 2
   DestroyEffect: {fileID: 2637528014026978721, guid: fb9fd0804981c834e91321be3e9affb2,
     type: 3}
 --- !u!61 &86785621
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2d79d73d1936c4397b2ba32c9df34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoints: 1
+  HitPoints: 3
   DestroyEffect: {fileID: 2637528014026978721, guid: fb9fd0804981c834e91321be3e9affb2,
     type: 3}
 --- !u!61 &770770085
@@ -675,6 +675,7 @@ Transform:
   m_Children:
   - {fileID: 1773351256}
   - {fileID: 158325645}
+  - {fileID: 1106845520}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -759,6 +760,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1106845519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106845520}
+  - component: {fileID: 1106845521}
+  m_Layer: 0
+  m_Name: BricksManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1106845520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106845519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 840926561}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1106845521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106845519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e33f246e908d947b2cdf19b52d4023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: 21300000, guid: 36ec5c1c0c011a54b865d9eff795d627, type: 3}
+  - {fileID: 21300000, guid: bbaf7554b54e0a14698805414531c968, type: 3}
+  - {fileID: 21300000, guid: 5afe9ec063a6a764488672b3be65de51, type: 3}
 --- !u!1 &1214606832
 GameObject:
   m_ObjectHideFlags: 0

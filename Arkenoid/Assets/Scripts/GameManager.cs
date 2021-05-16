@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,5 +21,9 @@ public class GameManager : MonoBehaviour
 
     public bool IsGameStarted { get; set; }
 
+    private void Start()
+    {
+        Screen.SetResolution(540, 960, false);
+    }
 
 }
