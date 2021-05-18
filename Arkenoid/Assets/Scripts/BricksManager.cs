@@ -24,15 +24,68 @@ public class BricksManager : MonoBehaviour
 
     private int maxRows = 17;
     private int maxCols = 12;
+    private float initialBrickSpawnPositionX = -1.96f;
+    private float initialBrickSpawnPositionY = 3.125f;
+    private float shiftAmount = 0.365f;
+
+    private GameObject bricksContainer;
+
+    public Brick brickPrefab;
 
     [SerializeField]
     public Sprite[] Sprites;
 
+    public Color[] BrickColors;
+
+    public List<Brick> RemainingBricks { get; set; }
+
     public List<int[,]> LevelsData {get; set;}
+
+    public int CurrentLevel;
+
+    public int InitialBricksCount { get; set; }
 
     private void Start()
     {
-        this.LevelsData = LoadLevelsData();   
+        this.bricksContainer = new GameObject("BricksContainer");
+        this.LevelsData = LoadLevelsData();
+        this.RemainingBricks = new List<Brick>();
+        this.GenerateBricks();
+    }
+
+    private void GenerateBricks()
+    {
+        int[,] currentLevelData = this.LevelsData[this.CurrentLevel];
+        float currentSpawnX = initialBrickSpawnPositionX;
+        float currentSpawnY = initialBrickSpawnPositionY;
+        float zShift = 0;
+
+        for (int row = 0; row < this.maxRows; row++)
+        {
+            for (int col = 0; col < this.maxCols; col++)
+            {
+                int brickType = currentLevelData[row, col];
+                if( brickType > 0)
+                {
+                    Brick newBrick = Instantiate(brickPrefab, new Vector3(currentSpawnX, currentSpawnY, 0 - zShift), Quaternion.identity) as Brick;
+                    newBrick.Init(bricksContainer.transform, this.Sprites[brickType - 1], this.BrickColors[brickType], brickType);
+
+                    this.RemainingBricks.Add(newBrick);
+                    zShift += 0.0001f;
+                }
+
+                currentSpawnX += shiftAmount;
+                if( col + 1 >= this.maxCols)
+                {
+                    currentSpawnX = initialBrickSpawnPositionX;
+                }
+            }
+
+            currentSpawnY -= shiftAmount;
+            zShift = ((row + 1) * 0.0005f);
+        }
+
+        this.InitialBricksCount = this.RemainingBricks.Count;
     }
 
     private List<int[,]> LoadLevelsData()
