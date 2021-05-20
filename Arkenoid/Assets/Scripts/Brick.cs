@@ -30,6 +30,7 @@ public class Brick : MonoBehaviour
 
         if(this.HitPoints <= 0)
         {
+            BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDesctruction?.Invoke(this);
             SpawnDestroyEffect();
             Destroy(this.gameObject);
