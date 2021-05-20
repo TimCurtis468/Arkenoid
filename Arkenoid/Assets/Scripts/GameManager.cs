@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public GameObject gameOverScreen;
+    public GameObject victoryScreen;
 
     public int AvailableLives = 3;
 
@@ -34,6 +35,17 @@ public class GameManager : MonoBehaviour
         this.Lives = AvailableLives;
         Screen.SetResolution(540, 960, false);
         Ball.OnBallDeath += OnBallDeath;
+        Brick.OnBrickDesctruction += OnBrickDestruction;
+    }
+
+    private void OnBrickDestruction(Brick obj)
+    {
+        if(BricksManager.Instance.RemainingBricks.Count <= 0)
+        {
+            BallsManager.Instance.ResetBalls();
+            GameManager.Instance.IsGameStarted = false;
+            BricksManager.Instance.LoadNextLevel();
+        }
     }
 
     public void RestartGame()
@@ -59,6 +71,11 @@ public class GameManager : MonoBehaviour
 
             }
         }
+    }
+
+    public void ShowVictoryScreen()
+    {
+        this.victoryScreen.SetActive(true);
     }
 
     private void OnDisable()
