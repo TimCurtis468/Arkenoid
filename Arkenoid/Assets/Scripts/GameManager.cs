@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance => _instance;
 
+
     private void Awake()
     {
         if(_instance != null)
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     public int Lives { get; set; }
 
     public bool IsGameStarted { get; set; }
+
+    public static event Action<int> OnLifeLost;
 
     private void Start()
     {
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                OnLifeLost?.Invoke(this.Lives);
                 BallsManager.Instance.ResetBalls();
                 IsGameStarted = false;
                 BricksManager.Instance.LoadLevel(BricksManager.Instance.CurrentLevel);
