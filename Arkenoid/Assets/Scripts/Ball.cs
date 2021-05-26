@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    private bool isLightningBall;
+    public bool isLightningBall;
     private SpriteRenderer sr;
 
     public ParticleSystem lightningBallEffect;

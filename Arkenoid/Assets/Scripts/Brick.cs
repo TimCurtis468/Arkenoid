@@ -7,6 +7,7 @@ using static UnityEngine.ParticleSystem;
 public class Brick : MonoBehaviour
 {
     private SpriteRenderer sr;
+    private BoxCollider2D boxCol;
 
     public int HitPoints = 1;
     public ParticleSystem DestroyEffect;
@@ -16,9 +17,34 @@ public class Brick : MonoBehaviour
     private void Awake()
     {
         this.sr = this.GetComponent<SpriteRenderer>();
+        this.boxCol = this.GetComponent<BoxCollider2D>();
+        Ball.OnLightningBallEnable += OnLightningBallEnable;
+        Ball.OnLightningBallDisable += OnLightningBallDisable;
+    }
+
+    private void OnLightningBallDisable(Ball obj)
+    {
+        if (this != null)
+        {
+            this.boxCol.isTrigger = false;
+        }
+    }
+
+    private void OnLightningBallEnable(Ball obj)
+    {
+        if( this != null)
+        {
+            this.boxCol.isTrigger = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Ball ball = collision.gameObject.GetComponent<Ball>();
+        ApplyCollisionLogic(ball);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         Ball ball = collision.gameObject.GetComponent<Ball>();
         ApplyCollisionLogic(ball);
@@ -28,7 +54,7 @@ public class Brick : MonoBehaviour
     {
         this.HitPoints--;
 
-        if(this.HitPoints <= 0)
+        if((this.HitPoints <= 0) || ((ball != null) && (ball.isLightningBall == true)))
         {
             BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDesctruction?.Invoke(this);
@@ -95,5 +121,11 @@ public class Brick : MonoBehaviour
         this.sr.sprite = sprite;
         this.sr.color = color;
         this.HitPoints = hitPoints;
-    }   
+    }
+
+    private void OnDisable()
+    {
+        Ball.OnLightningBallEnable -= OnLightningBallEnable;
+        Ball.OnLightningBallDisable -= OnLightningBallDisable;
+    }
 }
