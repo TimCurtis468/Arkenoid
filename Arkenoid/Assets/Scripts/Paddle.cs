@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class Paddle : MonoBehaviour
     #region Singleton
     private static Paddle _instance;
     public static Paddle Instance => _instance;
+
+    public bool PaddleIsTransforming { get; set; }
 
     private void Awake()
     {
@@ -19,6 +22,8 @@ public class Paddle : MonoBehaviour
             _instance = this;
         }
     }
+
+
     #endregion
 
     private Camera mainCamera;
@@ -27,6 +32,11 @@ public class Paddle : MonoBehaviour
     private float defaultLeftClamp = 135;
     private float defaultRightClamp = 410;
     private SpriteRenderer sr;
+    private BoxCollider2D boxCol;
+
+    public float extendShrinkDuration = 50;
+    public float paddleWidth = 2.0f;
+    public float paddleHeight = 0.28f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +44,54 @@ public class Paddle : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
         paddleInitialY = transform.position.y;
         sr = GetComponent<SpriteRenderer>();
+        boxCol = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
         PaddleMovement();
+    }
+
+    public void StartWidthAnimation(float newWidth)
+    {
+        StartCoroutine(AnimationPaddleWidth(newWidth));
+    }
+
+    private IEnumerator AnimationPaddleWidth(float width)
+    {
+        this.PaddleIsTransforming = true;
+        this.StartCoroutine(ResetPaddleWidthAfterTime(this.extendShrinkDuration));
+
+        if(width > this.sr.size.x)
+        {
+            float currentWidth = this.sr.size.x;
+            while(currentWidth < width)
+            {
+                currentWidth += Time.deltaTime * 2;
+                this.sr.size = new Vector2(currentWidth, paddleHeight);
+                boxCol.size = new Vector2(currentWidth, paddleHeight);
+                yield return null;
+            }
+        }
+        else
+        {
+            float currentWidth = this.sr.size.x;
+            while(currentWidth > width)
+            {
+                currentWidth -= Time.deltaTime * 2;
+                this.sr.size = new Vector2(currentWidth, paddleHeight);
+                boxCol.size = new Vector2(currentWidth, paddleHeight);
+                yield return null;
+            }
+        }
+        this.PaddleIsTransforming = false;
+    }
+
+    private IEnumerator ResetPaddleWidthAfterTime(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        this.StartWidthAnimation(this.paddleWidth);
     }
 
     private void PaddleMovement()
@@ -74,4 +126,6 @@ public class Paddle : MonoBehaviour
             }
         }
     }
+
+
 }

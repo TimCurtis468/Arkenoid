@@ -1281,9 +1281,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvailableBuffs:
   - {fileID: 5645439575860875203, guid: 198d9fb0694cc62419dda15197dca0db, type: 3}
-  AvailableDebuffs: []
-  BuffChance: 7.9
-  DebuffChance: 0
+  - {fileID: 2051779684, guid: 923486d6bf9e50045a51e0405a476abb, type: 3}
+  AvailableDebuffs:
+  - {fileID: 74890158, guid: 7216fcf8a7a42154f92fc497d140e7d7, type: 3}
+  BuffChance: 5
+  DebuffChance: 1
 --- !u!1 &1096642478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,6 +1989,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed3a02c204ab16448cfe557f84cf030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  extendShrinkDuration: 10
+  paddleWidth: 2
+  paddleHeight: 0.28
 --- !u!1 &2126715665
 GameObject:
   m_ObjectHideFlags: 0
