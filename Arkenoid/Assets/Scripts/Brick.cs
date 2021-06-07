@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
+
 public class Brick : MonoBehaviour
 {
     private SpriteRenderer sr;
@@ -40,21 +41,44 @@ public class Brick : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Ball ball = collision.gameObject.GetComponent<Ball>();
-        ApplyCollisionLogic(ball);
+        bool instantKill = false;
+
+        if (collision.collider.tag == "Ball")
+        {
+            Ball ball = collision.gameObject.GetComponent<Ball>();
+            instantKill = ball.isLightningBall;
+        }
+
+        if((collision.collider.tag == "Ball") || (collision.collider.tag == "Projectile"))
+        {
+            TakeDamage(instantKill);
+
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Ball ball = collision.gameObject.GetComponent<Ball>();
-        ApplyCollisionLogic(ball);
+        bool instantKill = false;
+
+        if (collision.gameObject.tag == "Ball")
+        {
+            Ball ball = collision.gameObject.GetComponent<Ball>();
+            instantKill = ball.isLightningBall;
+        }
+
+        if ((collision.gameObject.tag == "Ball") || (collision.gameObject.tag == "Projectile"))
+        {
+            TakeDamage(instantKill);
+
+        }
     }
 
-    private void ApplyCollisionLogic(Ball ball)
+    private void TakeDamage(bool instantKill)
     {
         this.HitPoints--;
 
-        if((this.HitPoints <= 0) || ((ball != null) && (ball.isLightningBall == true)))
+        if((this.HitPoints <= 0) || (instantKill == true))
         {
             BricksManager.Instance.RemainingBricks.Remove(this);
             OnBrickDesctruction?.Invoke(this);
